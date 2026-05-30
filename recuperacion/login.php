@@ -1,6 +1,5 @@
 <?php
 session_start();
-<?php
 // Diagnóstico inmediato de datos recibidos
 if (empty($_POST['email'])) {
     die("DEBUG: ¡El formulario no envió ningún correo! Revisa el atributo 'name' en tu formulario.");
