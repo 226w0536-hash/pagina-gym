@@ -1,6 +1,11 @@
 <?php
 session_start();
-
+<?php
+// Diagnóstico inmediato de datos recibidos
+if (empty($_POST['email'])) {
+    die("DEBUG: ¡El formulario no envió ningún correo! Revisa el atributo 'name' en tu formulario.");
+}
+// ... resto de tu código
 // Configuración de conexión (Asegúrate de que tus variables de entorno estén bien cargadas)
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
