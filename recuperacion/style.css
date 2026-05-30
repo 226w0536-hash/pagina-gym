@@ -164,3 +164,9 @@ header .btn-nav-login:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
 }
+
+/* Cuando el checkbox se marca, mostramos el modal que tiene el ID modal-login */
+#check-login:checked ~ #modal-login {
+    display: flex !important;
+}
+
