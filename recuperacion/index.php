@@ -1,5 +1,5 @@
 <?php
-// Configuración de variables
+// Configuración de variables de entorno para la conexión
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
@@ -9,18 +9,20 @@ $port = getenv('MYSQLPORT') ?: '3306';
 $equipo_seleccionado = [];
 
 try {
+    // Establecer conexión con PDO
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
     $pdo = new PDO($dsn, $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_TIMEOUT => 5
     ]);
     
-    // Consulta para obtener el equipo
+    // Consulta para obtener los datos de la tabla 'entrenadores'
+    // Asegúrate de que los nombres de las columnas coincidan con tu base de datos
     $stmt = $pdo->query("SELECT nombre, descripcion AS desc, foto_url AS img FROM entrenadores");
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
-    // Registramos el error internamente y dejamos el array vacío para el mensaje de fallback
+    // Si hay un error, se guarda para el log y no rompemos la ejecución
     error_log("Error de conexión: " . $e->getMessage());
 }
 
