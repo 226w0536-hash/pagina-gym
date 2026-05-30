@@ -15,8 +15,8 @@
         <label for="check-login" class="close-btn" style="cursor: pointer;">&times;</label>
         <h2>Iniciar Sesión</h2>
         <form action="login.php" method="POST">
-            <input type="email" placeholder="Correo" required>
-            <input type="password" placeholder="Contraseña" required>
+            <input type="email" name="email" placeholder="Correo" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit" class="login-btn">ENTRAR</button>
         </form>
     </div>
