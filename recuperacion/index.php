@@ -17,9 +17,8 @@ try {
     $stmt = $pdo->query("SELECT nombre, descripcion AS desc, foto_url AS img FROM entrenadores");
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    // Si falla, mostramos un mensaje o dejamos el arreglo vacío
-    // En producción, es mejor solo loguear el error
-    $error_bd = "No se pudo conectar a la base de datos.";
+    // Esto imprimirá el error real en tu pantalla
+    die("Error crítico de BD: " . $e->getMessage());
 }
 
 $titulo = "Ejercicio Mexicano - Inicio";
