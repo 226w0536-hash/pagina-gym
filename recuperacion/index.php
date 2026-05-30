@@ -2,23 +2,18 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "Paso 1: Iniciando script...<br>";
-
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
 $port = getenv('MYSQLPORT');
 
-echo "Paso 2: Variables cargadas (Host: $host)...<br>";
 
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
-    echo "Paso 3: Intentando conectar a $dsn...<br>";
     
     $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
     
-    echo "Paso 4: Conexión exitosa!<br>";
 } catch (PDOException $e) {
     die("Error en Paso 3: " . $e->getMessage());
 }
