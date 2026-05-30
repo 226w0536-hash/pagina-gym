@@ -1,10 +1,27 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario'])) {
+// Asegúrate de usar la variable de sesión que definiste en login.php
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
+
+// Configuración de conexión
+$host = getenv('MYSQLHOST');
+$db   = getenv('MYSQLDATABASE');
+$user = getenv('MYSQLUSER');
+$pass = getenv('MYSQLPASSWORD');
+$port = getenv('MYSQLPORT') ?: '3306';
+
+try {
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,11 +47,11 @@ if (!isset($_SESSION['usuario'])) {
         <section class="dashboard-grid">
             
             <div class="panel-izquierdo">
-                <h2>REGISTRAR / EDITAR SOCIO</h2>
+                <h2>REGISTRAR SOCIO</h2>
                 <form action="guardar_socio.php" method="POST">
                     <input type="text" name="nombre" placeholder="Nombre completo" required>
                     <input type="email" name="correo" placeholder="Correo electrónico" required>
-                    <select name="plan">
+                    <select name="plan" required>
                         <option value="">Selecciona un plan...</option>
                         <option value="pesas">Pesas</option>
                         <option value="yoga">Yoga</option>
@@ -55,15 +72,23 @@ if (!isset($_SESSION['usuario'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Carlos Mendoza</td>
-                            <td>carlos@ejemplo.com</td>
-                            <td>Pesas</td>
-                            <td>
-                                <button class="btn-editar">EDITAR</button>
-                                <button class="btn-eliminar">ELIMINAR</button>
-                            </td>
-                        </tr>
+                        <?php
+                        $stmt = $pdo->query("SELECT * FROM socios ORDER BY id DESC");
+                        while ($socio = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($socio['nombre']) . "</td>";
+                            echo "<td>" . htmlspecialchars($socio['correo']) . "</td>";
+                            echo "<td>" . htmlspecialchars($socio['plan']) . "</td>";
+                            echo "<td>
+                                    <button class='btn-editar'>EDITAR</button>
+                                    <form action='eliminar_socio.php' method='POST' style='display:inline;'>
+                                        <input type='hidden' name='id' value='" . $socio['id'] . "'>
+                                        <button type='submit' class='btn-eliminar'>ELIMINAR</button>
+                                    </form>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
