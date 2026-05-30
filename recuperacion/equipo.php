@@ -1,5 +1,18 @@
 <?php
 // Conexión a la base de datos usando variables de entorno de Railway
+if (!getenv('MYSQLHOST')) {
+    die("Error: Las variables de entorno de Railway no están llegando al código.");
+}
+
+// Verificar si PDO tiene drivers disponibles
+$drivers = PDO::getAvailableDrivers();
+if (!in_array('mysql', $drivers)) {
+    die("Error: El driver 'mysql' no está en la lista de drivers disponibles: " . implode(", ", $drivers));
+}
+
+// Si llega aquí, es que el driver SÍ existe y el error está en otro lado
+echo "El driver mysql está cargado correctamente. Intentando conectar...";
+
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
