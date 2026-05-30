@@ -1,12 +1,11 @@
 <?php
 session_start();
-// Asegúrate de usar la variable de sesión que definiste en login.php
+// Validación de rol
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-// Configuración de conexión
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
@@ -27,13 +26,13 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control - Ejercicio Mexicano</title>
+    <title>Panel de Control - Entrenadores</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="barra-navegacion">
-        <div class="logo">■ PANEL DE CONTROL DE SOCIOS</div>
+        <div class="logo">■ PANEL DE CONTROL: ENTRENADORES</div>
         <nav class="enlaces-nav">
             <a href="logout.php">CERRAR SESIÓN</a>
         </nav>
@@ -41,21 +40,17 @@ try {
 
     <main class="contenedor-principal">
         <div class="header-panel">
-            <h1>PANEL DE CONTROL DE SOCIOS</h1>
+            <h1>ADMINISTRACIÓN DE ENTRENADORES</h1>
         </div>
 
         <section class="dashboard-grid">
             
             <div class="panel-izquierdo">
-                <h2>REGISTRAR SOCIO</h2>
-                <form action="guardar_socio.php" method="POST">
+                <h2>REGISTRAR ENTRENADOR</h2>
+                <form action="guardar_entrenador.php" method="POST">
                     <input type="text" name="nombre" placeholder="Nombre completo" required>
-                    <input type="email" name="correo" placeholder="Correo electrónico" required>
-                    <select name="plan" required>
-                        <option value="">Selecciona un plan...</option>
-                        <option value="pesas">Pesas</option>
-                        <option value="yoga">Yoga</option>
-                    </select>
+                    <input type="text" name="descripcion" placeholder="Descripción breve" required>
+                    <input type="url" name="foto_url" placeholder="URL de la imagen" required>
                     <button type="submit" class="btn-guardar">GUARDAR REGISTRO</button>
                 </form>
             </div>
@@ -66,23 +61,22 @@ try {
                     <thead>
                         <tr>
                             <th>NOMBRE</th>
-                            <th>CORREO</th>
-                            <th>PLAN</th>
+                            <th>DESCRIPCIÓN</th>
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $stmt = $pdo->query("SELECT * FROM socios ORDER BY id DESC");
-                        while ($socio = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        // Consulta ajustada a los campos de la tabla entrenadores
+                        $stmt = $pdo->query("SELECT * FROM entrenadores ORDER BY id DESC");
+                        while ($entrenador = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($socio['nombre']) . "</td>";
-                            echo "<td>" . htmlspecialchars($socio['correo']) . "</td>";
-                            echo "<td>" . htmlspecialchars($socio['plan']) . "</td>";
+                            echo "<td>" . htmlspecialchars($entrenador['nombre']) . "</td>";
+                            echo "<td>" . htmlspecialchars($entrenador['descripcion']) . "</td>";
                             echo "<td>
                                     <button class='btn-editar'>EDITAR</button>
-                                    <form action='eliminar_socio.php' method='POST' style='display:inline;'>
-                                        <input type='hidden' name='id' value='" . $socio['id'] . "'>
+                                    <form action='eliminar_entrenador.php' method='POST' style='display:inline;'>
+                                        <input type='hidden' name='id' value='" . $entrenador['id'] . "'>
                                         <button type='submit' class='btn-eliminar'>ELIMINAR</button>
                                     </form>
                                   </td>";
