@@ -1,25 +1,28 @@
 <?php
-// 1. Intentamos obtener las variables de entorno de Railway
-$host = $_ENV['MYSQLHOST'] ?? getenv('MYSQLHOST');
-$db   = $_ENV['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE');
-$user = $_ENV['MYSQLUSER'] ?? getenv('MYSQLUSER');
-$pass = $_ENV['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD');
-$port = $_ENV['MYSQLPORT'] ?? getenv('MYSQLPORT');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$equipo_seleccionado = [];
+echo "Paso 1: Iniciando script...<br>";
+
+$host = getenv('MYSQLHOST');
+$db   = getenv('MYSQLDATABASE');
+$user = getenv('MYSQLUSER');
+$pass = getenv('MYSQLPASSWORD');
+$port = getenv('MYSQLPORT');
+
+echo "Paso 2: Variables cargadas (Host: $host)...<br>";
 
 try {
-    // 2. Conexión segura usando PDO
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
-    $pdo = new PDO($dsn, $user, $pass);
+    echo "Paso 3: Intentando conectar a $dsn...<br>";
     
-    // 3. Consulta de los entrenadores
-    $stmt = $pdo->query("SELECT nombre, descripcion AS desc, foto_url AS img FROM entrenadores");
-    $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
+    
+    echo "Paso 4: Conexión exitosa!<br>";
 } catch (PDOException $e) {
-    // Esto imprimirá el error real en tu pantalla
-    die("Error crítico de BD: " . $e->getMessage());
+    die("Error en Paso 3: " . $e->getMessage());
 }
+?>
 
 $titulo = "Ejercicio Mexicano - Inicio";
 ?>
