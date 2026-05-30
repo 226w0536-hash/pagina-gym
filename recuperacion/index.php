@@ -9,21 +9,30 @@ $port = getenv('MYSQLPORT') ?: '3306';
 $equipo_seleccionado = [];
 
 try {
-    // Establecer conexión con PDO
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
     $pdo = new PDO($dsn, $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_TIMEOUT => 5
     ]);
     
-    // Consulta para obtener los datos de la tabla 'entrenadores'
-    // Asegúrate de que los nombres de las columnas coincidan con tu base de datos
+    // 1. DIAGNÓSTICO: Verificar si la tabla existe
+    $check_table = $pdo->query("SHOW TABLES LIKE 'entrenadores'");
+    if ($check_table->rowCount() === 0) {
+        die("ERROR: La tabla 'entrenadores' no existe en la base de datos '$db'.");
+    }
+
+    // 2. DIAGNÓSTICO: Verificar si hay registros
+    $count = $pdo->query("SELECT COUNT(*) FROM entrenadores")->fetchColumn();
+    if ($count == 0) {
+        die("AVISO: La tabla 'entrenadores' existe pero está vacía (0 registros).");
+    }
+
+    // Si pasamos los tests, hacemos la consulta normal
     $stmt = $pdo->query("SELECT nombre, descripcion AS desc, foto_url AS img FROM entrenadores");
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
-    // Si hay un error, se guarda para el log y no rompemos la ejecución
-    error_log("Error de conexión: " . $e->getMessage());
+    die("Error de conexión: " . $e->getMessage());
 }
 
 $titulo = "Ejercicio Mexicano - Inicio";
