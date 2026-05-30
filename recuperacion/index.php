@@ -1,23 +1,28 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
+// Configuración de variables
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
-$port = getenv('MYSQLPORT');
+$port = getenv('MYSQLPORT') ?: '3306';
 
+$equipo_seleccionado = [];
 
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_TIMEOUT => 5
+    ]);
     
-    $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
+    // Consulta para obtener el equipo
+    $stmt = $pdo->query("SELECT nombre, descripcion AS desc, foto_url AS img FROM entrenadores");
+    $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
-    die("Error en Paso 3: " . $e->getMessage());
+    // Registramos el error internamente y dejamos el array vacío para el mensaje de fallback
+    error_log("Error de conexión: " . $e->getMessage());
 }
-?>
 
 $titulo = "Ejercicio Mexicano - Inicio";
 ?>
