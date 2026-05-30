@@ -1,48 +1,40 @@
 <?php
-// Mismo arreglo que usas en index.php
-$equipo_completo = [
-    ["nombre" => "DAVID SOSA", "desc" => "Entrenador profesional", "img" => "img/david.jpg"],
-    ["nombre" => "MARIA JUANA", "desc" => "Entrenadora entusiasta", "img" => "img/maria.jpg"],
-    // ... agrega el resto de tus 8+ integrantes aquí
-];
+// Conexión a la base de datos usando variables de entorno de Railway
+$host = getenv('MYSQLHOST');
+$db   = getenv('MYSQLDATABASE');
+$user = getenv('MYSQLUSER');
+$pass = getenv('MYSQLPASSWORD');
+$port = getenv('MYSQLPORT');
+
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
+
+try {
+    $pdo = new PDO($dsn, $user, $pass);
+    // Traemos toda la información de la tabla
+    $stmt = $pdo->query("SELECT nombre, descripcion, foto_url FROM entrenadores");
+    $entrenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error de conexión a la BD: " . $e->getMessage());
+}
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Nuestro Equipo - Ejercicio Mexicano</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Estilos específicos para la nueva página */
-        body { 
-            background: linear-gradient(135deg, #1a0b2e 0%, #001f3f 100%); 
-            color: white; 
-            min-height: 100vh;
-        }
-        .header-equipo { padding: 50px; text-align: center; }
-        .contenedor-full-equipo { 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px; 
-        }
-        .card-profesional { 
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            padding: 20px; border-radius: 20px; text-align: center; width: 250px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-    </style>
-</head>
-<body>
-    <div class="header-equipo">
+
+<body class="equipo-body">
+    <header class="equipo-header">
         <h1>NUESTRO STAFF COMPLETO</h1>
         <a href="index.php" class="equipo-btn-volver">← VOLVER AL INICIO</a>
-    </div>
-    <div class="contenedor-full-equipo">
-        <?php foreach ($equipo_completo as $persona): ?>
-        <div class="card-profesional">
-            <img src="<?php echo $persona['img']; ?>" style="width:100px; height:100px; border-radius:50%; border: 2px solid #ec008c;">
-            <h3><?php echo $persona['nombre']; ?></h3>
-            <p style="font-size: 0.8rem; opacity: 0.8;"><?php echo $persona['desc']; ?></p>
-        </div>
-        <?php endforeach; ?>
+    </header>
+
+    <div class="equipo-contenedor">
+        <?php if (!empty($entrenadores)): ?>
+            <?php foreach ($entrenadores as $persona): ?>
+            <div class="equipo-card">
+                <img src="<?php echo htmlspecialchars($persona['foto_url']); ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
+                <h3><?php echo htmlspecialchars($persona['nombre']); ?></h3>
+                <p>"<?php echo htmlspecialchars($persona['descripcion']); ?>"</p>
+            </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No se encontraron integrantes en la base de datos.</p>
+        <?php endif; ?>
     </div>
 </body>
-</html>
