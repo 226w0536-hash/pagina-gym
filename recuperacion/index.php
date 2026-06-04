@@ -17,8 +17,13 @@ try {
         PDO::ATTR_TIMEOUT => 5
     ]);
     
-    // Consulta incluyendo foto_tipo para soporte multiformato
-    $stmt = $pdo->query("SELECT nombre, descripcion AS descripcion_corta, foto_url AS img, foto_tipo FROM entrenadores");
+    // Consulta optimizada: Trae 4 registros aleatorios
+    $sql = "SELECT nombre, descripcion AS descripcion_corta, foto_url AS img, foto_tipo 
+            FROM entrenadores 
+            ORDER BY RAND() 
+            LIMIT 4";
+            
+    $stmt = $pdo->query($sql);
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
@@ -49,7 +54,7 @@ $titulo = "Ejercicio Mexicano - Inicio";
                 <h2>BIENVENIDOS A EJERCICIO MEXICANO</h2>
                 <p>Tu meta es nuestro objetivo. Entrena con los mejores.</p>
                 <a href="equipo.php" style="text-decoration: none;">
-                <button class="boton-blanco-fucsia">SABER MÁS</button>
+                    <button class="boton-blanco-fucsia">SABER MÁS</button>
                 </a>    
             </div>
         </section>
@@ -67,15 +72,14 @@ $titulo = "Ejercicio Mexicano - Inicio";
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>Cargando equipo o base de datos no disponible.</p>
+                    <p>No se encontraron integrantes disponibles en este momento.</p>
                 <?php endif; ?>
             </div>
         </section>
     </main>
 
     <script>
-        // Lógica para cerrar el modal haciendo clic fuera de él o mediante el checkbox
-        // Si necesitas agregar la funcionalidad del checkbox, asegúrate de que el ID sea correcto
+        // Lógica de JS para el modal de login (si es necesario)
     </script>
 </body>
 </html>
