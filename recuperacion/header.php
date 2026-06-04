@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <nav class="enlaces-nav">
         <a href="index.php">INICIO</a>
         <a href="equipo.php">NOSOTROS</a>
-        <a href="#">PRODUCTOS</a>
+       
 
         <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
             <a href="dashboard.php" class="btn-nav">PANEL</a>
