@@ -17,8 +17,8 @@ try {
         PDO::ATTR_TIMEOUT => 5
     ]);
     
-    // Consulta corregida: cambiamos 'AS desc' por 'AS descripcion_corta'
-    $stmt = $pdo->query("SELECT nombre, descripcion AS descripcion_corta, foto_url AS img FROM entrenadores");
+    // Consulta actualizada: incluimos 'foto_tipo' para soportar múltiples formatos
+    $stmt = $pdo->query("SELECT nombre, descripcion AS descripcion_corta, foto_url AS img, foto_tipo FROM entrenadores");
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
@@ -47,7 +47,8 @@ $titulo = "Ejercicio Mexicano - Inicio";
                 <?php if (!empty($equipo_seleccionado)): ?>
                     <?php foreach ($equipo_seleccionado as $persona): ?>
                     <div class="card-entrenador">
-                        <img src="data:image/jpeg;base64,<?php echo htmlspecialchars($persona['img']); ?>" alt="<?php echo htmlspecialchars($persona['nombre']); ?>">
+                        <img src="data:<?php echo htmlspecialchars($persona['foto_tipo']); ?>;base64,<?php echo htmlspecialchars($persona['img']); ?>" alt="<?php echo htmlspecialchars($persona['nombre']); ?>">
+                        
                         <div class="nombre-box"><?php echo htmlspecialchars($persona['nombre']); ?></div>
                         <p>"<?php echo htmlspecialchars($persona['descripcion_corta']); ?>"</p>
                     </div>
