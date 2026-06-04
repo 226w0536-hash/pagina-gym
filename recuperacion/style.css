@@ -3,10 +3,7 @@
 body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #f4f4f4; }
 
 /* --- NAVEGACIÓN --- */
-.barra-navegacion { 
-    display: flex; justify-content: space-between; padding: 20px 50px; 
-    background: white; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-}
+.barra-navegacion { display: flex; justify-content: space-between; padding: 20px 50px; background: white; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 .logo { font-weight: bold; font-size: 1.2rem; }
 .enlaces-nav a { text-decoration: none; color: #ec008c; font-weight: bold; padding: 10px; cursor: pointer; }
 
@@ -30,22 +27,10 @@ body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #
 /* --- SECCIÓN EQUIPO (INICIO) --- */
 .seccion-equipo { padding: 50px 20px; text-align: center; background: #f9f9f9; }
 .titulo-seccion { margin-bottom: 40px; font-size: 2rem; color: #333; }
-
-.contenedor-entrenadores { 
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; 
-}
-
-.card-entrenador { 
-    flex: 0 0 220px; background: white; padding: 20px; border-radius: 15px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center;
-}
-.card-entrenador img { 
-    width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #00d4ff; margin-bottom: 10px;
-}
-.nombre-box { 
-    margin: 10px 0; padding: 8px; border: 2px solid #1a233a; border-radius: 20px; 
-    font-weight: bold; color: #1a233a; font-size: 0.9rem;
-}
+.contenedor-entrenadores { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; }
+.card-entrenador { flex: 0 0 220px; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+.card-entrenador img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #00d4ff; margin-bottom: 10px; }
+.nombre-box { margin: 10px 0; padding: 8px; border: 2px solid #1a233a; border-radius: 20px; font-weight: bold; color: #1a233a; font-size: 0.9rem; }
 .card-entrenador p { font-style: italic; color: #666; font-size: 0.8rem; margin-top: 5px; }
 
 /* --- LOGIN MODAL Y INTRO --- */
@@ -68,9 +53,15 @@ body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #
     .seccion-intro { flex-direction: column; height: auto; }
 }
 
-header .btn-nav-login { 
-    padding: 10px 20px; border: 2px solid #ec008c !important; 
-    color: #ec008c !important; background: white !important; 
-    border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s;
-}
-header .btn-nav-login:hover { background: #ec008c !
+header .btn-nav-login { padding: 10px 20px; border: 2px solid #ec008c !important; color: #ec008c !important; background: white !important; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+header .btn-nav-login:hover { background: #ec008c !important; color: white !important; }
+
+/* --- ESTILOS PÁGINA EQUIPO --- */
+body.equipo-body { background: linear-gradient(rgba(26, 35, 58, 0.85), rgba(26, 35, 58, 0.85)), url('img/imagen.jpg') no-repeat center center fixed !important; background-size: cover !important; min-height: 100vh !important; color: #ffffff !important; }
+header.equipo-header { padding: 60px 20px !important; text-align: center !important; background: transparent !important; }
+header.equipo-header h1 { font-size: 2.5rem !important; margin-bottom: 10px !important; color: #ffffff !important; }
+div.equipo-contenedor { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 30px !important; padding: 40px 20px !important; max-width: 1200px !important; margin: 0 auto !important; }
+div.equipo-card { background: rgba(255, 255, 255, 0.1) !important; backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; padding: 25px !important; border-radius: 20px !important; text-align: center !important; width: 250px !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+div.equipo-card img { width: 120px !important; height: 120px !important; border-radius: 50% !important; border: 4px solid #ffffff !important; margin-bottom: 15px !important; object-fit: cover !important; }
+div.equipo-card h3 { margin-bottom: 10px !important; color: #ffffff !important; }
+.equipo-btn-volver { display: inline-block; margin-top: 20px; padding: 12px 25px; background: #007bff; color: white !important; text-decoration: none !important; border-radius: 30px; font-weight: bold; border: 2px solid #00d4ff; }
