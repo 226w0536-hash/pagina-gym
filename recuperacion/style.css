@@ -70,3 +70,12 @@ div.equipo-card { background: rgba(255, 255, 255, 0.1) !important; backdrop-filt
 div.equipo-card img { width: 120px !important; height: 120px !important; border-radius: 50% !important; border: 4px solid #ffffff !important; margin-bottom: 15px !important; object-fit: cover !important; }
 div.equipo-card h3 { margin-bottom: 10px !important; color: #ffffff !important; }
 .equipo-btn-volver { display: inline-block; margin-top: 20px; padding: 12px 25px; background: #007bff; color: white !important; text-decoration: none !important; border-radius: 30px; font-weight: bold; border: 2px solid #00d4ff; }
+
+.equipo-descripcion {
+    margin-top: 10px !important;
+    color: #e0e0e0 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    font-style: italic;
+    padding: 0 5px;
+}
