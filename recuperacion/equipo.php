@@ -29,10 +29,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestro Staff</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body class="equipo-body">
+    
     <header class="equipo-header">
         <h1>NUESTRO STAFF COMPLETO</h1>
         <a href="index.php" class="equipo-btn-volver">← VOLVER AL INICIO</a>
@@ -45,11 +46,12 @@ try {
                 <img src="data:<?php echo htmlspecialchars($persona['foto_tipo']); ?>;base64,<?php echo htmlspecialchars($persona['foto_url']); ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
                 
                 <h3><?php echo htmlspecialchars($persona['nombre']); ?></h3>
-                </div>
+            </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p>No se encontraron integrantes en la base de datos.</p>
         <?php endif; ?>
     </div>
+
 </body>
 </html>
