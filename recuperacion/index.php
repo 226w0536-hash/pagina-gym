@@ -46,7 +46,7 @@ $titulo = "Ejercicio Mexicano - Inicio";
                 <?php if (!empty($equipo_seleccionado)): ?>
                     <?php foreach ($equipo_seleccionado as $persona): ?>
                     <div class="card-entrenador">
-                        <img src="<?php echo htmlspecialchars($persona['img']); ?>" alt="<?php echo htmlspecialchars($persona['nombre']); ?>">
+                        <img src="data:image/jpeg;base64,<?php echo htmlspecialchars($persona['img']); ?>" alt="<?php echo htmlspecialchars($persona['nombre']); ?>">
                         <div class="nombre-box"><?php echo htmlspecialchars($persona['nombre']); ?></div>
                         <p>"<?php echo htmlspecialchars($persona['descripcion_corta']); ?>"</p>
                     </div>
