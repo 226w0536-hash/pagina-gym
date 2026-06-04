@@ -1,5 +1,5 @@
 <?php
-// Aseguramos que la sesión esté iniciada para poder leer $_SESSION
+// Aseguramos que la sesión esté iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </nav>
 </header>
 
-<?php if (!isset($_SESSION['rol'])): ?>
+<?php if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin'): ?>
 <div class="login-modal oculto" id="modal-login">
     <div class="login-card">
         <label for="check-login" class="close-btn" style="cursor: pointer;">&times;</label>
