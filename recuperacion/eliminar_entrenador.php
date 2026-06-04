@@ -1,12 +1,10 @@
 <?php
 session_start();
-// 1. Proteger el archivo: solo admins pueden eliminar
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-// 2. Conexión a la base de datos
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
@@ -18,16 +16,26 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    // 3. Verificar que recibimos el ID
     if (isset($_POST['id'])) {
         $id = $_POST['id'];
 
-        // 4. Eliminar el registro
+        // 1. Obtener la ruta de la imagen antes de eliminar el registro
+        $stmt = $pdo->prepare("SELECT foto_url FROM entrenadores WHERE id = ?");
+        $stmt->execute([$id]);
+        $entrenador = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($entrenador && !empty($entrenador['foto_url'])) {
+            // 2. Borrar el archivo físico si existe
+            if (file_exists($entrenador['foto_url'])) {
+                unlink($entrenador['foto_url']);
+            }
+        }
+
+        // 3. Eliminar el registro de la base de datos
         $stmt = $pdo->prepare("DELETE FROM entrenadores WHERE id = ?");
         $stmt->execute([$id]);
     }
 
-    // 5. Regresar al dashboard
     header("Location: dashboard.php");
     exit();
 
