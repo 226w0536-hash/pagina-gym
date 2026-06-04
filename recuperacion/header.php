@@ -1,3 +1,10 @@
+<?php
+// Aseguramos que la sesión esté iniciada para poder leer $_SESSION
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <input type="checkbox" id="check-login" class="oculto">
 
 <header class="barra-navegacion">
@@ -6,10 +13,17 @@
         <a href="index.php">INICIO</a>
         <a href="equipo.php">NOSOTROS</a>
         <a href="#">PRODUCTOS</a>
-        <label for="check-login" class="btn-nav-login" style="cursor: pointer;">INICIAR SESIÓN</label>
+
+        <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
+            <a href="dashboard.php" class="btn-nav">PANEL</a>
+            <a href="logout.php" class="btn-nav">CERRAR SESIÓN</a>
+        <?php else: ?>
+            <label for="check-login" class="btn-nav-login" style="cursor: pointer;">INICIAR SESIÓN</label>
+        <?php endif; ?>
     </nav>
 </header>
 
+<?php if (!isset($_SESSION['rol'])): ?>
 <div class="login-modal oculto" id="modal-login">
     <div class="login-card">
         <label for="check-login" class="close-btn" style="cursor: pointer;">&times;</label>
@@ -21,3 +35,4 @@
         </form>
     </div>
 </div>
+<?php endif; ?>
