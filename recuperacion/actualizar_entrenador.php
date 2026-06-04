@@ -23,30 +23,27 @@ try {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
 
-    // 4. Obtener la ruta de la imagen actual antes de hacer nada
+    // 4. Obtener el valor actual de foto_url (que ahora será texto base64)
     $stmt = $pdo->prepare("SELECT foto_url FROM entrenadores WHERE id = ?");
     $stmt->execute([$id]);
     $entrenador_actual = $stmt->fetch(PDO::FETCH_ASSOC);
-    $ruta_foto = $entrenador_actual['foto_url'];
+    
+    // Si no se sube imagen, mantenemos lo que ya hay en la BD
+    $imagen_a_guardar = $entrenador_actual['foto_url'];
 
-    // 5. Si el usuario subió una imagen nueva, procesarla
+    // 5. Si el usuario subió una imagen nueva, procesarla a Base64
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
-        // Borrar la imagen vieja del servidor si existe
-        if (!empty($ruta_foto) && file_exists($ruta_foto)) {
-            unlink($ruta_foto);
-        }
-
-        // Subir la nueva imagen
-        $directorio = "uploads/";
-        $nombreArchivo = time() . "_" . basename($_FILES['imagen']['name']);
-        $ruta_foto = $directorio . $nombreArchivo;
-        move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta_foto);
+        
+        // Leemos el contenido binario y lo convertimos a base64
+        $datos_binarios = file_get_contents($_FILES['imagen']['tmp_name']);
+        $imagen_a_guardar = base64_encode($datos_binarios);
     }
 
     // 6. Actualizar la base de datos
+    // Nota: foto_url ahora guarda una cadena de texto gigante (Base64)
     $sql = "UPDATE entrenadores SET nombre = ?, descripcion = ?, foto_url = ? WHERE id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$nombre, $descripcion, $ruta_foto, $id]);
+    $stmt->execute([$nombre, $descripcion, $imagen_a_guardar, $id]);
 
     // 7. Redireccionar
     header("Location: dashboard.php");
