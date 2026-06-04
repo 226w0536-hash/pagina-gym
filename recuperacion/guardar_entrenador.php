@@ -22,28 +22,27 @@ try {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     
-    // 4. Manejo de la imagen
-    $rutaDestino = ""; // Valor por defecto
+    // Inicializar variables para la base de datos
+    $imagen_base64 = "";
+    $tipo_archivo = "image/jpeg"; // Valor por defecto
+
+    // 4. Manejo de la imagen a Base64
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
-        $directorio = "uploads/";
         
-        // Crear carpeta si no existe
-        if (!is_dir($directorio)) {
-            mkdir($directorio, 0777, true);
-        }
+        // Detectar el tipo MIME real (image/png, image/webp, image/avif, etc)
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $tipo_archivo = $finfo->file($_FILES['imagen']['tmp_name']);
 
-        $nombreArchivo = time() . "_" . basename($_FILES['imagen']['name']);
-        $rutaDestino = $directorio . $nombreArchivo;
-
-        if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
-            throw new Exception("Error al mover el archivo de imagen.");
-        }
+        // Convertir el contenido a base64
+        $datos_binarios = file_get_contents($_FILES['imagen']['tmp_name']);
+        $imagen_base64 = base64_encode($datos_binarios);
     }
 
     // 5. Insertar en la base de datos
-    $sql = "INSERT INTO entrenadores (nombre, descripcion, foto_url) VALUES (?, ?, ?)";
+    // Ahora guardamos foto_url (base64) y foto_tipo
+    $sql = "INSERT INTO entrenadores (nombre, descripcion, foto_url, foto_tipo) VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$nombre, $descripcion, $rutaDestino]);
+    $stmt->execute([$nombre, $descripcion, $imagen_base64, $tipo_archivo]);
 
     // 6. Redireccionar
     header("Location: dashboard.php");
