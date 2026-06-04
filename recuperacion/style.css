@@ -27,21 +27,21 @@ body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #
 .btn-editar { background: #00d4ff; border: none; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; }
 .btn-eliminar { background: #ec008c; border: none; color: white; padding: 6px 12px; border-radius: 15px; cursor: pointer; }
 
-/* --- SECCIÓN EQUIPO (NUEVO DISEÑO FLEXIBLE Y CENTRADO) --- */
+/* --- SECCIÓN EQUIPO (INICIO) --- */
 .seccion-equipo { padding: 50px 20px; text-align: center; background: #f9f9f9; }
 .titulo-seccion { margin-bottom: 40px; font-size: 2rem; color: #333; }
 
 .contenedor-entrenadores { 
     display: flex; 
     flex-wrap: wrap; 
-    justify-content: center; /* Esto centra las tarjetas si no completan la fila */
+    justify-content: center; 
     gap: 20px; 
     max-width: 1200px; 
     margin: 0 auto; 
 }
 
 .card-entrenador { 
-    flex: 0 0 220px; /* Tamaño fijo, no se estira */
+    flex: 0 0 220px; 
     background: white; 
     padding: 20px; 
     border-radius: 15px; 
@@ -78,103 +78,55 @@ body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #
     .seccion-intro { flex-direction: column; height: auto; }
 }
 
-/* Estilo específico y prioritario para el botón de login del header */
 header .btn-nav-login { 
-    padding: 10px 20px; 
-    border: 2px solid #ec008c !important; /* El !important asegura que nadie lo sobreescriba */
-    color: #ec008c !important; 
-    background: white !important; 
-    border-radius: 20px; 
-    cursor: pointer; 
-    font-weight: bold;
-    transition: 0.3s;
+    padding: 10px 20px; border: 2px solid #ec008c !important; 
+    color: #ec008c !important; background: white !important; 
+    border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s;
 }
+header .btn-nav-login:hover { background: #ec008c !important; color: white !important; }
 
-header .btn-nav-login:hover { 
-    background: #ec008c !important; 
-    color: white !important; 
-}
-
-/* --- ESTILOS PÁGINA EQUIPO (INTEGRADO) --- */
-
+/* --- ESTILOS PÁGINA EQUIPO (MODERNO) --- */
 .equipo-body { 
-    background: url('img/imagen.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    min-height: 100vh;
-}
-
-.equipo-header { 
-    padding: 60px 20px; 
-    text-align: center; 
-    background: rgba(0, 0, 0, 0.3); 
-}
-
-.equipo-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-.equipo-header a { color: #00d4ff; text-decoration: none; font-weight: bold; }
-
-.equipo-contenedor { 
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 30px; 
-    padding: 40px 20px; 
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.equipo-card { 
-    background: rgba(255, 255, 255, 0.05); 
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 25px; 
-    border-radius: 20px; 
-    text-align: center; 
-    width: 250px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.equipo-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.1); }
-
-.equipo-card img { 
-    width: 110px; height: 110px; border-radius: 50%; 
-    border: 3px solid #ec008c; margin-bottom: 15px; object-fit: cover;
-}
-
-.equipo-card h3 { margin-bottom: 10px; color: #fff; }
-.equipo-card p { font-size: 0.85rem; opacity: 0.9; font-style: italic; }
-
-/* Botón de navegación personalizado */
-.equipo-btn-volver {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 25px;
-    background: #007bff; /* Azul profesional */
-    color: white !important;
-    text-decoration: none !important;
-    border-radius: 30px;
-    font-weight: bold;
-    border: 2px solid #00d4ff;
-    transition: all 0.3s ease;
-}
-
-.equipo-btn-volver:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-}
-
-/* Cuando el checkbox se marca, mostramos el modal que tiene el ID modal-login */
-#check-login:checked ~ #modal-login {
-    display: flex !important;
-}
-
-.equipo-body { 
-    /* El degradado azul (rgba) se coloca ANTES de la URL de la imagen */
-    background: linear-gradient(rgba(26, 35, 58, 0.8), rgba(26, 35, 58, 0.8)), 
+    background: linear-gradient(rgba(26, 35, 58, 0.85), rgba(26, 35, 58, 0.85)), 
                 url('img/imagen.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
     min-height: 100vh;
 }
+
+.equipo-header { padding: 60px 20px; text-align: center; background: rgba(0, 0, 0, 0.2); }
+.equipo-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+.equipo-contenedor { 
+    display: flex; flex-wrap: wrap; justify-content: center; 
+    gap: 30px; padding: 40px 20px; max-width: 1200px; margin: 0 auto;
+}
+
+.equipo-card { 
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 25px; border-radius: 20px; 
+    text-align: center; width: 250px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.equipo-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.15); }
+
+.equipo-card img { 
+    width: 120px; height: 120px; border-radius: 50%; 
+    border: 4px solid #ffffff; margin-bottom: 15px; object-fit: cover;
+}
+
+.equipo-card h3 { margin-bottom: 10px; color: #fff; }
+
+.equipo-btn-volver {
+    display: inline-block; margin-top: 20px; padding: 12px 25px;
+    background: #007bff; color: white !important; text-decoration: none !important;
+    border-radius: 30px; font-weight: bold; border: 2px solid #00d4ff;
+    transition: all 0.3s ease;
+}
+.equipo-btn-volver:hover { background: #0056b3; transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 212, 255, 0.5); }
+
+#check-login:checked ~ #modal-login { display: flex !important; }
