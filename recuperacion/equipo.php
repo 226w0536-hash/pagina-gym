@@ -15,7 +15,7 @@ $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
 try {
     $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     
-    // CAMBIO 1: Incluimos 'foto_tipo' en la consulta SQL
+    // Consulta incluyendo 'foto_tipo' para soporte multiformato
     $stmt = $pdo->query("SELECT nombre, descripcion, foto_url, foto_tipo FROM entrenadores");
     $entrenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -42,15 +42,10 @@ try {
         <?php if (!empty($entrenadores)): ?>
             <?php foreach ($entrenadores as $persona): ?>
             <div class="equipo-card">
-                <?php 
-                // CAMBIO 2: Usamos dinámicamente $persona['foto_tipo'] en lugar de un tipo estático.
-                // Esto permite que el navegador entienda si es webp, png, jpeg o avif.
-                ?>
                 <img src="data:<?php echo htmlspecialchars($persona['foto_tipo']); ?>;base64,<?php echo htmlspecialchars($persona['foto_url']); ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
                 
                 <h3><?php echo htmlspecialchars($persona['nombre']); ?></h3>
-                <p>"<?php echo htmlspecialchars($persona['descripcion']); ?>"</p>
-            </div>
+                </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p>No se encontraron integrantes en la base de datos.</p>
