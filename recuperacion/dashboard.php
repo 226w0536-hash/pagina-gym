@@ -47,10 +47,10 @@ try {
             
             <div class="panel-izquierdo">
                 <h2>REGISTRAR ENTRENADOR</h2>
-                <form action="guardar_entrenador.php" method="POST">
+                <form action="guardar_entrenador.php" method="POST" enctype="multipart/form-data">
                     <input type="text" name="nombre" placeholder="Nombre completo" required>
                     <input type="text" name="descripcion" placeholder="Descripción breve" required>
-                    <input type="url" name="foto_url" placeholder="URL de la imagen" required>
+                    <input type="file" name="imagen" accept="image/*" required>
                     <button type="submit" class="btn-guardar">GUARDAR REGISTRO</button>
                 </form>
             </div>
@@ -73,7 +73,7 @@ try {
                             echo "<td>" . htmlspecialchars($entrenador['nombre']) . "</td>";
                             echo "<td>" . htmlspecialchars($entrenador['descripcion']) . "</td>";
                             echo "<td>
-                                    <button type='button' class='btn-editar' onclick=\"abrirModal(" . $entrenador['id'] . ", '" . htmlspecialchars($entrenador['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($entrenador['descripcion'], ENT_QUOTES) . "', '" . htmlspecialchars($entrenador['foto_url'], ENT_QUOTES) . "')\">EDITAR</button>
+                                    <button type='button' class='btn-editar' onclick=\"abrirModal(" . $entrenador['id'] . ", '" . htmlspecialchars($entrenador['nombre'], ENT_QUOTES) . "', '" . htmlspecialchars($entrenador['descripcion'], ENT_QUOTES) . "')\">EDITAR</button>
                                     <form action='eliminar_entrenador.php' method='POST' style='display:inline;'>
                                         <input type='hidden' name='id' value='" . $entrenador['id'] . "'>
                                         <button type='submit' class='btn-eliminar'>ELIMINAR</button>
@@ -91,14 +91,14 @@ try {
     <div id="modalEditar" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
         <div style="background:white; padding:20px; border-radius:8px; width:400px; color:black;">
             <h2>EDITAR ENTRENADOR</h2>
-            <form action="actualizar_entrenador.php" method="POST">
+            <form action="actualizar_entrenador.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="edit-id">
                 <label>Nombre:</label><br>
                 <input type="text" name="nombre" id="edit-nombre" style="width:100%;" required><br><br>
                 <label>Descripción:</label><br>
                 <input type="text" name="descripcion" id="edit-descripcion" style="width:100%;" required><br><br>
-                <label>URL Imagen:</label><br>
-                <input type="url" name="foto_url" id="edit-foto" style="width:100%;" required><br><br>
+                <label>Cambiar imagen (opcional):</label><br>
+                <input type="file" name="imagen" accept="image/*" style="width:100%;"><br><br>
                 <button type="submit" class="btn-guardar">GUARDAR CAMBIOS</button>
                 <button type="button" onclick="cerrarModal()">CANCELAR</button>
             </form>
@@ -106,11 +106,10 @@ try {
     </div>
 
     <script>
-        function abrirModal(id, nombre, desc, foto) {
+        function abrirModal(id, nombre, desc) {
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-nombre').value = nombre;
             document.getElementById('edit-descripcion').value = desc;
-            document.getElementById('edit-foto').value = foto;
             document.getElementById('modalEditar').style.display = 'flex';
         }
 
