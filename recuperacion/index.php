@@ -43,7 +43,7 @@ $titulo = "Ejercicio Mexicano - Inicio";
 
         <section class="seccion-intro">
             <div class="imagen-intro">
-                <img src="ruta-de-tu-imagen.jpg" alt="Bienvenidos a Ejercicio Mexicano">
+                <img src="/img/Low-cost.jpg" alt="Bienvenidos a Ejercicio Mexicano">
             </div>
             <div class="texto-intro">
                 <h2>BIENVENIDOS A EJERCICIO MEXICANO</h2>
