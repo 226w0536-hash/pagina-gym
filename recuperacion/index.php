@@ -17,7 +17,7 @@ try {
         PDO::ATTR_TIMEOUT => 5
     ]);
     
-    // Consulta actualizada: incluimos 'foto_tipo' para soportar múltiples formatos
+    // Consulta incluyendo foto_tipo para soporte multiformato
     $stmt = $pdo->query("SELECT nombre, descripcion AS descripcion_corta, foto_url AS img, foto_tipo FROM entrenadores");
     $equipo_seleccionado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -41,6 +41,17 @@ $titulo = "Ejercicio Mexicano - Inicio";
     <main class="contenedor-principal">
         <?php include 'header.php'; ?>
 
+        <section class="seccion-intro">
+            <div class="imagen-intro">
+                <img src="ruta-de-tu-imagen.jpg" alt="Bienvenidos a Ejercicio Mexicano">
+            </div>
+            <div class="texto-intro">
+                <h2>BIENVENIDOS A EJERCICIO MEXICANO</h2>
+                <p>Tu meta es nuestro objetivo. Entrena con los mejores.</p>
+                <button class="boton-blanco-fucsia">SABER MÁS</button>
+            </div>
+        </section>
+
         <section class="seccion-equipo">
             <h2 class="titulo-seccion">NUESTRO EQUIPO</h2>
             <div class="contenedor-entrenadores">
@@ -61,7 +72,8 @@ $titulo = "Ejercicio Mexicano - Inicio";
     </main>
 
     <script>
-        // ... (tu código JS de login)
+        // Lógica para cerrar el modal haciendo clic fuera de él o mediante el checkbox
+        // Si necesitas agregar la funcionalidad del checkbox, asegúrate de que el ID sea correcto
     </script>
 </body>
 </html>
