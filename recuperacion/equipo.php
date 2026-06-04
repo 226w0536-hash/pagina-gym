@@ -46,6 +46,10 @@ try {
                 <img src="data:<?php echo htmlspecialchars($persona['foto_tipo']); ?>;base64,<?php echo htmlspecialchars($persona['foto_url']); ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
                 
                 <h3><?php echo htmlspecialchars($persona['nombre']); ?></h3>
+                
+                <p class="equipo-descripcion">
+                    <?php echo htmlspecialchars($persona['descripcion']); ?>
+                </p>
             </div>
             <?php endforeach; ?>
         <?php else: ?>
