@@ -48,7 +48,9 @@ $titulo = "Ejercicio Mexicano - Inicio";
             <div class="texto-intro">
                 <h2>BIENVENIDOS A EJERCICIO MEXICANO</h2>
                 <p>Tu meta es nuestro objetivo. Entrena con los mejores.</p>
+                <a href="equipo.php" style="text-decoration: none;">
                 <button class="boton-blanco-fucsia">SABER MÁS</button>
+                </a>    
             </div>
         </section>
 
