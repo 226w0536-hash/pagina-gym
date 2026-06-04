@@ -1,43 +1,34 @@
 <?php
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestro Staff</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
-// Conexión a la base de datos usando variables de entorno de Railway
-if (!getenv('MYSQLHOST')) {
-    die("Error: Las variables de entorno de Railway no están llegando al código.");
-}
+// Habilitar errores para depurar si algo vuelve a fallar
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Verificar si PDO tiene drivers disponibles
-$drivers = PDO::getAvailableDrivers();
-if (!in_array('mysql', $drivers)) {
-    die("Error: El driver 'mysql' no está en la lista de drivers disponibles: " . implode(", ", $drivers));
-}
-
-// Si llega aquí, es que el driver SÍ existe y el error está en otro lado
-echo "El driver mysql está cargado correctamente. Intentando conectar...";
-
+// Conexión a la base de datos
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
 $user = getenv('MYSQLUSER');
 $pass = getenv('MYSQLPASSWORD');
-$port = getenv('MYSQLPORT');
+$port = getenv('MYSQLPORT') ?: '3306';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
 
 try {
-    $pdo = new PDO($dsn, $user, $pass);
-    // Traemos toda la información de la tabla
+    $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     $stmt = $pdo->query("SELECT nombre, descripcion, foto_url FROM entrenadores");
     $entrenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error de conexión a la BD: " . $e->getMessage());
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Staff</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
 <body class="equipo-body">
     <header class="equipo-header">
@@ -59,3 +50,4 @@ try {
         <?php endif; ?>
     </div>
 </body>
+</html>
