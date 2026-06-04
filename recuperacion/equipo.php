@@ -1,5 +1,5 @@
 <?php
-// Habilitar errores para depurar si algo vuelve a fallar
+// Habilitar errores para depurar
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -40,7 +40,13 @@ try {
         <?php if (!empty($entrenadores)): ?>
             <?php foreach ($entrenadores as $persona): ?>
             <div class="equipo-card">
-                <img src="<?php echo htmlspecialchars($persona['foto_url']); ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
+                <?php 
+                // Explicación: Si la foto es un string base64, lo incrustamos directamente en el src
+                // Usamos 'data:image/jpeg;base64,' para decirle al navegador que es una imagen.
+                // Si guardas otros formatos (png), podrías cambiar image/jpeg por image/png o dejarlo genérico
+                ?>
+                <img src="data:image/jpeg;base64,<?php echo $persona['foto_url']; ?>" alt="Foto de <?php echo htmlspecialchars($persona['nombre']); ?>">
+                
                 <h3><?php echo htmlspecialchars($persona['nombre']); ?></h3>
                 <p>"<?php echo htmlspecialchars($persona['descripcion']); ?>"</p>
             </div>
