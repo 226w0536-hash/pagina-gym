@@ -34,6 +34,7 @@ try {
     <header class="barra-navegacion">
         <div class="logo">■ PANEL DE CONTROL: ENTRENADORES</div>
         <nav class="enlaces-nav">
+            <a href="index.php" class="btn-nav">VOLVER AL SITIO</a>
             <a href="logout.php">CERRAR SESIÓN</a>
         </nav>
     </header>
