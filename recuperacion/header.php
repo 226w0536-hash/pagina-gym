@@ -1,5 +1,4 @@
 <?php
-// Aseguramos que la sesión esté iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,7 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <nav class="enlaces-nav">
         <a href="index.php">INICIO</a>
         <a href="equipo.php">NOSOTROS</a>
-       
 
         <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
             <a href="dashboard.php" class="btn-nav">PANEL</a>
@@ -24,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </header>
 
 <?php if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin'): ?>
-<div class="login-modal oculto" id="modal-login">
+<div class="login-modal" id="modal-login" style="display: none;">
     <div class="login-card">
         <label for="check-login" class="close-btn" style="cursor: pointer;">&times;</label>
         <h2>Iniciar Sesión</h2>
