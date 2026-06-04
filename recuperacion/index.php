@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Configuración de variables de entorno
 $host = getenv('MYSQLHOST');
 $db   = getenv('MYSQLDATABASE');
